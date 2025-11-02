@@ -23,10 +23,13 @@ const CollaborativeCodeEditor = () => {
   const textareaRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!roomId) {
+  const timeout = setTimeout(() => {
+    if (roomId === undefined || roomId === null) {
       navigate("/");
     }
-  }, [roomId]);
+  }, 1000); // Slightly longer delay
+  return () => clearTimeout(timeout);
+}, [roomId]);
 
   const copyRoomCode = () => {
     navigator.clipboard.writeText(roomId || "");
